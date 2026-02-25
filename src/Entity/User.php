@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,17 @@ class User
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $role = null;
+
+    /**
+     * @var Collection<int, Share>
+     */
+    #[ORM\ManyToMany(targetEntity: Share::class, mappedBy: 'share_user')]
+    private Collection $shares;
+
+    public function __construct()
+    {
+        $this->shares = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -97,6 +110,33 @@ class User
     public function setRole(?string $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Share>
+     */
+    public function getShares(): Collection
+    {
+        return $this->shares;
+    }
+
+    public function addShare(Share $share): static
+    {
+        if (!$this->shares->contains($share)) {
+            $this->shares->add($share);
+            $share->addShareUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShare(Share $share): static
+    {
+        if ($this->shares->removeElement($share)) {
+            $share->removeShareUser($this);
+        }
 
         return $this;
     }

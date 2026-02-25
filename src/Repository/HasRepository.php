@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Addons;
+use App\Entity\Has;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Addons>
+ * @extends ServiceEntityRepository<Has>
  */
-class AddonsRepository extends ServiceEntityRepository
+class HasRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Addons::class);
+        parent::__construct($registry, Has::class);
     }
 
     //    /**
-    //     * @return Addons[] Returns an array of Addons objects
+    //     * @return Has[] Returns an array of Has objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
+    //        return $this->createQueryBuilder('h')
+    //            ->andWhere('h.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
+    //            ->orderBy('h.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Addons
+    //    public function findOneBySomeField($value): ?Has
     //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
+    //        return $this->createQueryBuilder('h')
+    //            ->andWhere('h.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

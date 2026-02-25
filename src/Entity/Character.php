@@ -18,23 +18,29 @@ class Character
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     private ?string $age = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $physical_traits = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $character_traits = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $background = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $others = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private mixed $illustration = null;
+
+    #[ORM\OneToOne(mappedBy: 'has', cascade: ['persist', 'remove'])]
+    private ?Addons $addons = null;
+
+    #[ORM\OneToOne(inversedBy: 'character_file', cascade: ['persist', 'remove'])]
+    private ?Campaign $has = null;
 
     public function getId(): ?int
     {
@@ -77,7 +83,7 @@ class Character
         return $this->physical_traits;
     }
 
-    public function setPhysicalTraits(string $physical_traits): static
+    public function setPhysicalTraits(?string $physical_traits): static
     {
         $this->physical_traits = $physical_traits;
 
@@ -89,7 +95,7 @@ class Character
         return $this->character_traits;
     }
 
-    public function setCharacterTraits(string $character_traits): static
+    public function setCharacterTraits(?string $character_traits): static
     {
         $this->character_traits = $character_traits;
 
@@ -101,7 +107,7 @@ class Character
         return $this->background;
     }
 
-    public function setBackground(string $background): static
+    public function setBackground(?string $background): static
     {
         $this->background = $background;
 
@@ -113,7 +119,7 @@ class Character
         return $this->others;
     }
 
-    public function setOthers(string $others): static
+    public function setOthers(?string $others): static
     {
         $this->others = $others;
 
@@ -128,6 +134,40 @@ class Character
     public function setIllustration(mixed $illustration): static
     {
         $this->illustration = $illustration;
+
+        return $this;
+    }
+
+    public function getAddons(): ?Addons
+    {
+        return $this->addons;
+    }
+
+    public function setAddons(?Addons $addons): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($addons === null && $this->addons !== null) {
+            $this->addons->setHas(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($addons !== null && $addons->getHas() !== $this) {
+            $addons->setHas($this);
+        }
+
+        $this->addons = $addons;
+
+        return $this;
+    }
+
+    public function getHas(): ?Campaign
+    {
+        return $this->has;
+    }
+
+    public function setHas(?Campaign $has): static
+    {
+        $this->has = $has;
 
         return $this;
     }

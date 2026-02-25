@@ -2,25 +2,28 @@
 
 namespace App\Entity;
 
-use App\Repository\AddOnsRepository;
+use App\Repository\AddonsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AddOnsRepository::class)]
-class AddOns
+#[ORM\Entity(repositoryClass: AddonsRepository::class)]
+class Addons
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 355, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $playlist = null;
 
-    #[ORM\Column(length: 355, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $moodboard = null;
 
-    #[ORM\Column(length: 355, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $other = null;
+
+    #[ORM\OneToOne(inversedBy: 'addons', cascade: ['persist', 'remove'])]
+    private ?Character $has = null;
 
     public function getId(): ?int
     {
@@ -66,6 +69,18 @@ class AddOns
     public function setOther(?string $other): static
     {
         $this->other = $other;
+
+        return $this;
+    }
+
+    public function getHas(): ?Character
+    {
+        return $this->has;
+    }
+
+    public function setHas(?Character $has): static
+    {
+        $this->has = $has;
 
         return $this;
     }
