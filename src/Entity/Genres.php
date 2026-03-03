@@ -19,14 +19,14 @@ class Genres
     private ?string $name = null;
 
     /**
-     * @var Collection<int, Has>
+     * @var Collection<int, Campaign>
      */
-    #[ORM\ManyToMany(targetEntity: Has::class, mappedBy: 'has_genres')]
-    private Collection $has;
+    #[ORM\ManyToMany(targetEntity: Campaign::class, mappedBy: 'genre')]
+    private Collection $campaigns;
 
     public function __construct()
     {
-        $this->has = new ArrayCollection();
+        $this->campaigns = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -54,27 +54,27 @@ class Genres
     }
 
     /**
-     * @return Collection<int, Has>
+     * @return Collection<int, Campaign>
      */
-    public function getHas(): Collection
+    public function getCampaigns(): Collection
     {
-        return $this->has;
+        return $this->campaigns;
     }
 
-    public function addHa(Has $ha): static
+    public function addCampaign(Campaign $campaign): static
     {
-        if (!$this->has->contains($ha)) {
-            $this->has->add($ha);
-            $ha->addHasGenre($this);
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns->add($campaign);
+            $campaign->addGenre($this);
         }
 
         return $this;
     }
 
-    public function removeHa(Has $ha): static
+    public function removeCampaign(Campaign $campaign): static
     {
-        if ($this->has->removeElement($ha)) {
-            $ha->removeHasGenre($this);
+        if ($this->campaigns->removeElement($campaign)) {
+            $campaign->removeGenre($this);
         }
 
         return $this;

@@ -25,34 +25,23 @@ class Share
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'shares')]
-    private Collection $share_user;
+    #[ORM\ManyToOne(inversedBy: 'sharing')]
+    private ?User $user = null;
 
     /**
      * @var Collection<int, Campaign>
      */
-    #[ORM\ManyToMany(targetEntity: Campaign::class, inversedBy: 'shares')]
-    private Collection $share_campaign;
+    #[ORM\OneToMany(targetEntity: Campaign::class, mappedBy: 'shared')]
+    private Collection $campaigns;
 
     public function __construct()
     {
-        $this->share_user = new ArrayCollection();
-        $this->share_campaign = new ArrayCollection();
+        $this->campaigns = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     public function getSharedBy(): ?string
@@ -91,26 +80,14 @@ class Share
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getShareUser(): Collection
+    public function getUser(): ?User
     {
-        return $this->share_user;
+        return $this->user;
     }
 
-    public function addShareUser(User $shareUser): static
+    public function setUser(?User $user): static
     {
-        if (!$this->share_user->contains($shareUser)) {
-            $this->share_user->add($shareUser);
-        }
-
-        return $this;
-    }
-
-    public function removeShareUser(User $shareUser): static
-    {
-        $this->share_user->removeElement($shareUser);
+        $this->user = $user;
 
         return $this;
     }
@@ -118,23 +95,29 @@ class Share
     /**
      * @return Collection<int, Campaign>
      */
-    public function getShareCampaign(): Collection
+    public function getCampaigns(): Collection
     {
-        return $this->share_campaign;
+        return $this->campaigns;
     }
 
-    public function addShareCampaign(Campaign $shareCampaign): static
+    public function addCampaign(Campaign $campaign): static
     {
-        if (!$this->share_campaign->contains($shareCampaign)) {
-            $this->share_campaign->add($shareCampaign);
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns->add($campaign);
+            $campaign->setShared($this);
         }
 
         return $this;
     }
 
-    public function removeShareCampaign(Campaign $shareCampaign): static
+    public function removeCampaign(Campaign $campaign): static
     {
-        $this->share_campaign->removeElement($shareCampaign);
+        if ($this->campaigns->removeElement($campaign)) {
+            // set the owning side to null (unless already changed)
+            if ($campaign->getShared() === $this) {
+                $campaign->setShared(null);
+            }
+        }
 
         return $this;
     }

@@ -22,25 +22,25 @@ class Campaign
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\OneToOne(mappedBy: 'has', cascade: ['persist', 'remove'])]
-    private ?Character $character_file = null;
+    /**
+     * @var Collection<int, Character>
+     */
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'campaign')]
+    private Collection $characters;
 
     /**
-     * @var Collection<int, Share>
+     * @var Collection<int, Genres>
      */
-    #[ORM\ManyToMany(targetEntity: Share::class, mappedBy: 'share_campaign')]
-    private Collection $shares;
+    #[ORM\ManyToMany(targetEntity: Genres::class, inversedBy: 'campaigns')]
+    private Collection $genre;
 
-    /**
-     * @var Collection<int, Has>
-     */
-    #[ORM\ManyToMany(targetEntity: Has::class, mappedBy: 'has_campaign')]
-    private Collection $has;
+    #[ORM\ManyToOne(inversedBy: 'campaigns')]
+    private ?Share $shared = null;
 
     public function __construct()
     {
-        $this->shares = new ArrayCollection();
-        $this->has = new ArrayCollection();
+        $this->characters = new ArrayCollection();
+        $this->genre = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,78 +79,68 @@ class Campaign
         return $this;
     }
 
-    public function getCharacterFile(): ?Character
-    {
-        return $this->character_file;
-    }
-
-    public function setCharacterFile(?Character $character_file): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($character_file === null && $this->character_file !== null) {
-            $this->character_file->setHas(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($character_file !== null && $character_file->getHas() !== $this) {
-            $character_file->setHas($this);
-        }
-
-        $this->character_file = $character_file;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Share>
+     * @return Collection<int, Character>
      */
-    public function getShares(): Collection
+    public function getCharacters(): Collection
     {
-        return $this->shares;
+        return $this->characters;
     }
 
-    public function addShare(Share $share): static
+    public function addCharacter(Character $character): static
     {
-        if (!$this->shares->contains($share)) {
-            $this->shares->add($share);
-            $share->addShareCampaign($this);
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+            $character->setCampaign($this);
         }
 
         return $this;
     }
 
-    public function removeShare(Share $share): static
+    public function removeCharacter(Character $character): static
     {
-        if ($this->shares->removeElement($share)) {
-            $share->removeShareCampaign($this);
+        if ($this->characters->removeElement($character)) {
+            // set the owning side to null (unless already changed)
+            if ($character->getCampaign() === $this) {
+                $character->setCampaign(null);
+            }
         }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Has>
+     * @return Collection<int, Genres>
      */
-    public function getHas(): Collection
+    public function getGenre(): Collection
     {
-        return $this->has;
+        return $this->genre;
     }
 
-    public function addHa(Has $ha): static
+    public function addGenre(Genres $genre): static
     {
-        if (!$this->has->contains($ha)) {
-            $this->has->add($ha);
-            $ha->addHasCampaign($this);
+        if (!$this->genre->contains($genre)) {
+            $this->genre->add($genre);
         }
 
         return $this;
     }
 
-    public function removeHa(Has $ha): static
+    public function removeGenre(Genres $genre): static
     {
-        if ($this->has->removeElement($ha)) {
-            $ha->removeHasCampaign($this);
-        }
+        $this->genre->removeElement($genre);
+
+        return $this;
+    }
+
+    public function getShared(): ?Share
+    {
+        return $this->shared;
+    }
+
+    public function setShared(?Share $shared): static
+    {
+        $this->shared = $shared;
 
         return $this;
     }

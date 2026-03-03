@@ -22,6 +22,14 @@ security:
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
 
+            form_login:
+            login_path: app_login
+            check_path: app_login
+            enable_csrf: true
+
+            json_login:
+            check_path: api_login
+
     # Note: Only the *first* matching rule is applied
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }

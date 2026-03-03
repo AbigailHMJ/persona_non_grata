@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20260225105009 extends AbstractMigration
+final class Version20260227141959 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,14 +20,16 @@ final class Version20260225105009 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE has (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE share (id INT AUTO_INCREMENT NOT NULL, shared_by VARCHAR(255) NOT NULL, date_share DATE NOT NULL, status VARCHAR(255) NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('ALTER TABLE addons ADD addon_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE addons ADD CONSTRAINT FK_DB652637CC642678 FOREIGN KEY (addon_id) REFERENCES `character` (id)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_DB652637CC642678 ON addons (addon_id)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE has');
-        $this->addSql('DROP TABLE share');
+        $this->addSql('ALTER TABLE addons DROP FOREIGN KEY FK_DB652637CC642678');
+        $this->addSql('DROP INDEX UNIQ_DB652637CC642678 ON addons');
+        $this->addSql('ALTER TABLE addons DROP addon_id');
     }
 }

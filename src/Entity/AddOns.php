@@ -13,17 +13,17 @@ class Addons
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 355, nullable: true)]
     private ?string $playlist = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 355, nullable: true)]
     private ?string $moodboard = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 355, nullable: true)]
     private ?string $other = null;
 
     #[ORM\OneToOne(inversedBy: 'addons', cascade: ['persist', 'remove'])]
-    private ?Character $has = null;
+    private ?Character $addon = null;
 
     public function getId(): ?int
     {
@@ -73,14 +73,14 @@ class Addons
         return $this;
     }
 
-    public function getHas(): ?Character
+    public function getAddon(): ?Character
     {
-        return $this->has;
+        return $this->addon;
     }
 
-    public function setHas(?Character $has): static
+    public function setAddon(?Character $addon): static
     {
-        $this->has = $has;
+        $this->addon = $addon;
 
         return $this;
     }

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Share index{% endblock %}
+
+{% block body %}
+    <h1>Share index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Shared_by</th>
+                <th>Date_share</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for share in shares %}
+            <tr>
+                <td>{{ share.id }}</td>
+                <td>{{ share.sharedBy }}</td>
+                <td>{{ share.dateShare ? share.dateShare|date('Y-m-d') : '' }}</td>
+                <td>{{ share.status }}</td>
+                <td>
+                    <a href="{{ path('app_share_show', {'id': share.id}) }}">show</a>
+                    <a href="{{ path('app_share_edit', {'id': share.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_share_new') }}">Create new</a>
+{% endblock %}

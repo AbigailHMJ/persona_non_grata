@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -22,24 +23,31 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $birthdate = null;
-
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTime $birthdate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $role = null;
 
     /**
+     * @var Collection<int, Character>
+     */
+    #[ORM\OneToMany(targetEntity: Character::class, mappedBy: 'user')]
+    private Collection $characters;
+
+    /**
      * @var Collection<int, Share>
      */
-    #[ORM\ManyToMany(targetEntity: Share::class, mappedBy: 'share_user')]
-    private Collection $shares;
+    #[ORM\OneToMany(targetEntity: Share::class, mappedBy: 'user')]
+    private Collection $sharing;
 
     public function __construct()
     {
-        $this->shares = new ArrayCollection();
+        $this->characters = new ArrayCollection();
+        $this->sharing = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,18 +86,6 @@ class User
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTime
-    {
-        return $this->birthdate;
-    }
-
-    public function setBirthdate(\DateTime $birthdate): static
-    {
-        $this->birthdate = $birthdate;
-
-        return $this;
-    }
-
     public function getPassword(): ?string
     {
         return $this->password;
@@ -98,6 +94,18 @@ class User
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getBirthdate(): ?\DateTime
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate(\DateTime $birthdate): static
+    {
+        $this->birthdate = $birthdate;
 
         return $this;
     }
@@ -115,27 +123,60 @@ class User
     }
 
     /**
-     * @return Collection<int, Share>
+     * @return Collection<int, Character>
      */
-    public function getShares(): Collection
+    public function getCharacters(): Collection
     {
-        return $this->shares;
+        return $this->characters;
     }
 
-    public function addShare(Share $share): static
+    public function addCharacter(Character $character): static
     {
-        if (!$this->shares->contains($share)) {
-            $this->shares->add($share);
-            $share->addShareUser($this);
+        if (!$this->characters->contains($character)) {
+            $this->characters->add($character);
+            $character->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeShare(Share $share): static
+    public function removeCharacter(Character $character): static
     {
-        if ($this->shares->removeElement($share)) {
-            $share->removeShareUser($this);
+        if ($this->characters->removeElement($character)) {
+            // set the owning side to null (unless already changed)
+            if ($character->getUser() === $this) {
+                $character->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Share>
+     */
+    public function getSharing(): Collection
+    {
+        return $this->sharing;
+    }
+
+    public function addSharing(Share $sharing): static
+    {
+        if (!$this->sharing->contains($sharing)) {
+            $this->sharing->add($sharing);
+            $sharing->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSharing(Share $sharing): static
+    {
+        if ($this->sharing->removeElement($sharing)) {
+            // set the owning side to null (unless already changed)
+            if ($sharing->getUser() === $this) {
+                $sharing->setUser(null);
+            }
         }
 
         return $this;

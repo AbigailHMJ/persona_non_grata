@@ -36,11 +36,14 @@ class Character
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private mixed $illustration = null;
 
-    #[ORM\OneToOne(mappedBy: 'has', cascade: ['persist', 'remove'])]
-    private ?Addons $addons = null;
+    #[ORM\ManyToOne(inversedBy: 'characters')]
+    private ?Campaign $campaign = null;
 
-    #[ORM\OneToOne(inversedBy: 'character_file', cascade: ['persist', 'remove'])]
-    private ?Campaign $has = null;
+    #[ORM\ManyToOne(inversedBy: 'characters')]
+    private ?User $user = null;
+
+    #[ORM\OneToOne(mappedBy: 'addon', cascade: ['persist', 'remove'])]
+    private ?Addons $addons = null;
 
     public function getId(): ?int
     {
@@ -138,6 +141,30 @@ class Character
         return $this;
     }
 
+    public function getCampaign(): ?Campaign
+    {
+        return $this->campaign;
+    }
+
+    public function setCampaign(?Campaign $campaign): static
+    {
+        $this->campaign = $campaign;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     public function getAddons(): ?Addons
     {
         return $this->addons;
@@ -147,27 +174,15 @@ class Character
     {
         // unset the owning side of the relation if necessary
         if ($addons === null && $this->addons !== null) {
-            $this->addons->setHas(null);
+            $this->addons->setAddon(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($addons !== null && $addons->getHas() !== $this) {
-            $addons->setHas($this);
+        if ($addons !== null && $addons->getAddon() !== $this) {
+            $addons->setAddon($this);
         }
 
         $this->addons = $addons;
-
-        return $this;
-    }
-
-    public function getHas(): ?Campaign
-    {
-        return $this->has;
-    }
-
-    public function setHas(?Campaign $has): static
-    {
-        $this->has = $has;
 
         return $this;
     }
