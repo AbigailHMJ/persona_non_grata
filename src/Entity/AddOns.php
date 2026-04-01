@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AddOnsRepository;
+use App\Repository\AddonsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AddOnsRepository::class)]
-class AddOns
+#[ORM\Entity(repositoryClass: AddonsRepository::class)]
+class Addons
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,6 +21,9 @@ class AddOns
 
     #[ORM\Column(length: 355, nullable: true)]
     private ?string $other = null;
+
+    #[ORM\OneToOne(inversedBy: 'addons', cascade: ['persist', 'remove'])]
+    private ?Character $addon = null;
 
     public function getId(): ?int
     {
@@ -66,6 +69,18 @@ class AddOns
     public function setOther(?string $other): static
     {
         $this->other = $other;
+
+        return $this;
+    }
+
+    public function getAddon(): ?Character
+    {
+        return $this->addon;
+    }
+
+    public function setAddon(?Character $addon): static
+    {
+        $this->addon = $addon;
 
         return $this;
     }

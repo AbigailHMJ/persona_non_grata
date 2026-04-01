@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Addons{% endblock %}
+
+{% block body %}
+    <h1>Edit Addons</h1>
+
+    {{ include('addons/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_addons_index') }}">back to list</a>
+
+    {{ include('addons/_delete_form.html.twig') }}
+{% endblock %}

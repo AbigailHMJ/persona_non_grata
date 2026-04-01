@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\GenresRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GenresRepository::class)]
@@ -15,6 +17,17 @@ class Genres
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
+
+    /**
+     * @var Collection<int, Campaign>
+     */
+    #[ORM\ManyToMany(targetEntity: Campaign::class, mappedBy: 'genre')]
+    private Collection $campaigns;
+
+    public function __construct()
+    {
+        $this->campaigns = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -36,6 +49,33 @@ class Genres
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Campaign>
+     */
+    public function getCampaigns(): Collection
+    {
+        return $this->campaigns;
+    }
+
+    public function addCampaign(Campaign $campaign): static
+    {
+        if (!$this->campaigns->contains($campaign)) {
+            $this->campaigns->add($campaign);
+            $campaign->addGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCampaign(Campaign $campaign): static
+    {
+        if ($this->campaigns->removeElement($campaign)) {
+            $campaign->removeGenre($this);
+        }
 
         return $this;
     }

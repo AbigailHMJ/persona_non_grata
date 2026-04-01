@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\AddOns;
+use App\Entity\Addons;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<AddOns>
+ * @extends ServiceEntityRepository<Addons>
  */
-class AddOnsRepository extends ServiceEntityRepository
+class AddonsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AddOns::class);
+        parent::__construct($registry, Addons::class);
     }
 
     //    /**
-    //     * @return AddOns[] Returns an array of AddOns objects
+    //     * @return Addons[] Returns an array of Addons objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class AddOnsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?AddOns
+    //    public function findOneBySomeField($value): ?Addons
     //    {
     //        return $this->createQueryBuilder('a')
     //            ->andWhere('a.exampleField = :val')
