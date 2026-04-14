@@ -1,0 +1,46 @@
+@use "../abstract/variables" as*;
+@use "../abstract/breakpoints" as*;
+@use "../components/base" as*;
+
+// DEFINES OVERALL STYLE FOR LEGAL PAGE
+
+.legalbox {
+    width: 100%;
+    margin:2em 0;
+
+    .legalbox-zone {
+        width: 70%;
+        background: var(--silence);
+        border-radius: 10px;
+        padding: 2em;
+        margin:0 auto;
+        text-align: center;
+        line-height: 1em;
+        font-size: $size-18;
+        font-family: "CustomSubtitles", serif;
+        box-shadow: 0px 0px 2px $shadow;
+    }
+
+    .legalbox-titles {
+        margin: 0 0 1em 0;
+        padding: 0 0 0.2em 0;
+        text-align: left;
+        border-bottom: solid 2px $dark-emerald;
+        font-variant: small-caps;
+        font-size: $size-20;
+    }
+
+    p{
+        text-align: justify;
+        font-family:'CustomBody', 'Heebo', sans-serif;
+        line-height: 1em;
+        font-size: $size-14;
+        color:var(--text);
+    }
+
+    ul{
+        text-align:left;
+        font-family:'CustomBody', 'Heebo',sans-serif;
+        font-size:$size-14;
+    }
+}

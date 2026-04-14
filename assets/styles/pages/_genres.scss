@@ -1,0 +1,52 @@
+@use "../abstract/variables" as*;
+@use "../abstract/breakpoints" as*;
+@use "../components/base" as*;
+
+// Defines overall styles for the genres page
+// This page is only accessible to users with the admin rank
+
+// Genres index
+.genre-index {
+    box-shadow: 0px 0px 2px $shadow;
+    width: 50%;
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+
+thead {
+    width: 50%;
+}
+
+th {
+    text-align: center;
+    margin: 0;
+    background: $indian-gold;
+    padding: 0.5em;
+    font-family: "CustomSubtitles", serif;
+    text-transform: uppercase;
+    color: $dark-emerald;
+}
+
+tbody {
+    background: var(--silence);
+        color: var(--text);
+}
+
+td {
+    text-align: center;
+    margin: 0;
+    padding: 0.5em;
+    border-bottom: solid 1px $indian-gold;
+}
+
+.index-genre-actions {
+    font-family: "CustomTitles", "Montserrat", sans-serif;
+    font-size:$size-14;
+}
+
+.genre-new {
+    text-align: left;
+    display: block;
+    margin-left: 2em;
+    font-family:'CustomTitles', 'Montserrat', sans-serif;
+}

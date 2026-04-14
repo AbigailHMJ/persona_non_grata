@@ -1,17 +1,103 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Persona Non Grata
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			{# Integration link for CSS styles #}
+			{# <link rel="stylesheet" href="{{ asset('styles/app.scss') }}"> #}
+			{# Integration link for FontAwesome SVG icons #}
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> {% endblock %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{{ importmap('app') }}
+		{% block javascripts %}
+			{% block importmap %}{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		{# Page body #}
+		<header>
+			{# Page header with navigation links #}
+			<a class="site-title" href="{{ path('home') }}">Persona Non Grata</a>
+
+			<nav class="navbar" id="navbar">
+				<div class="navbar-container">
+					<div class="nav-button">
+						<i class="fa-solid fa-bars"></i>
+					</div>
+					<ul class="nav-menu">
+						{% if app.user %}
+							<li class="nav-item">
+								<a href="{{ path('app_campaign_index') }}">
+									<i class="fa-regular fa-folder"></i>
+									Campagnes</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ path('app_character_index') }}">
+									<i class="fa-regular fa-id-badge"></i>
+									Personnages</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ path('app_genres_index') }}">
+									<i class="fa-solid fa-list-ul"></i>
+									Genres</a>
+							</li>
+							<li class="nav-item">
+								<a href="#">
+									<i class="fa-solid fa-user-pen"></i>
+									Profil</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ logout_path() }}">
+									<i class="fa-solid fa-arrow-right-to-bracket"></i>
+									Se déconnecter</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a href="{{ path('app_register') }}">
+									<i class="fa-regular fa-file-lines"></i>
+									S'inscrire</a>
+							</li>
+							<li class="nav-item">
+								<a href="{{ path('app_login') }}">
+									<i class="fa-solid fa-arrow-right-to-bracket"></i>
+									Se connecter</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+				<button id="dark-mode-toggle" class="toggle">
+					<i class="fa-solid fa-sun light-switch"></i>
+					<i class="fa-solid fa-moon dark-switch"></i>
+				</button>
+			</nav>
+		</header>
+
+		{% block body %}{% endblock %}
+		<footer>
+		<a class="site-name" href="{{ path('home') }}">Persona Non Grata</a>
+			<ul>
+				<li>
+					<i class="fa-solid fa-angle-right"></i>
+					<a href="{{ path('home') }}">Accueil</a>
+				</li>
+				{% if app.user %}
+				<li>
+					<i class="fa-solid fa-angle-right"></i>
+					Campagnes</li>
+				<li>
+					<i class="fa-solid fa-angle-right"></i>
+					<a href="{{ path('app_genres_index') }}">Genres</a>
+				</li>
+				{% endif %}
+				<li>
+					<i class="fa-solid fa-angle-right"></i>
+					<a href="{{ path('legal') }}">Mentions légales</a></li>
+			</ul>
+			<p>Développé avec Symfony PHP 8.4, SASS et JavaScript dans le cadre de la validation du titre professionnel Développeur web/web mobile 2025-2026.</p>
+		</footer>
+	</body>
 </html>

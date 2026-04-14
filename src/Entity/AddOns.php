@@ -22,7 +22,7 @@ class Addons
     #[ORM\Column(length: 355, nullable: true)]
     private ?string $other = null;
 
-    #[ORM\OneToOne(inversedBy: 'addons', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'addons')]
     private ?Character $addon = null;
 
     public function getId(): ?int

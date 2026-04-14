@@ -1,35 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Genres index{% endblock %}
+{% block title %}Genres{% endblock %}
 
 {% block body %}
-    <h1>Genres index</h1>
+{% if app.user %}
+<main>
+    <h1>Genres</h1>
 
-    <table class="table">
+ {% if is_granted('ROLE_ADMIN') %}<a class="genre-new" href="{{ path('app_genres_new') }}"><i class="fa-solid fa-circle-plus"></i> Ajouter un genre</a>{% endif %}
+    <table class="genre-index">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
+                <th>Genre</th>
+               {% if is_granted('ROLE_ADMIN') %} <th>Actions</th>{% endif %}
             </tr>
         </thead>
         <tbody>
         {% for genre in genres %}
             <tr>
-                <td>{{ genre.id }}</td>
-                <td>{{ genre.name }}</td>
-                <td>
-                    <a href="{{ path('app_genres_show', {'id': genre.id}) }}">show</a>
-                    <a href="{{ path('app_genres_edit', {'id': genre.id}) }}">edit</a>
-                </td>
+                <td>{{ genre.keyword }}</td>
+               {% if is_granted('ROLE_ADMIN') %} <td class="index-genre-actions">
+                    <a href="{{ path('app_genres_edit', {'id': genre.id}) }}">Modifier</a>
+                </td>{% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Aucun genre trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_genres_new') }}">Create new</a>
+    </main>
+    {% endif %}
 {% endblock %}

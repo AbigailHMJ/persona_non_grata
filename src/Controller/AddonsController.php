@@ -45,6 +45,7 @@ final class AddonsController extends AbstractController
     #[Route('/{id}', name: 'app_addons_show', methods: ['GET'])]
     public function show(Addons $addon): Response
     {
+
         return $this->render('addons/show.html.twig', [
             'addon' => $addon,
         ]);
@@ -53,6 +54,7 @@ final class AddonsController extends AbstractController
     #[Route('/{id}/edit', name: 'app_addons_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Addons $addon, EntityManagerInterface $entityManager): Response
     {
+
         $form = $this->createForm(AddonsType::class, $addon);
         $form->handleRequest($request);
 
@@ -71,6 +73,7 @@ final class AddonsController extends AbstractController
     #[Route('/{id}', name: 'app_addons_delete', methods: ['POST'])]
     public function delete(Request $request, Addons $addon, EntityManagerInterface $entityManager): Response
     {
+
         if ($this->isCsrfTokenValid('delete'.$addon->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($addon);
             $entityManager->flush();

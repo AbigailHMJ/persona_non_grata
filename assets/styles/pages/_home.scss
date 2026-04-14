@@ -1,0 +1,75 @@
+@use "../abstract/variables" as *;
+@use "../abstract/breakpoints" as *;
+@use "../components/base" as *;
+
+// Defines overall styles for the homepage
+.homebox {
+    display: flex;
+    flex-direction: row; // Will change to column under 768px of screen width
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin: 2em 0;
+    width: 100%;
+    flex-wrap: wrap;
+
+    .presentation {
+        width: 30%;
+        background: var(--silence);
+        border-radius: 10px;
+        padding: 2em;
+        text-align: center;
+        line-height: 1em;
+        font-size: $size-18;
+        font-family: "CustomSubtitles", serif;
+        box-shadow: 0px 0px 2px $shadow;
+    }
+
+    .target {
+        width: 40%;
+        background: var(--silence);
+        border-radius: 10px;
+        padding: 2em;
+        text-align: justify;
+        line-height: 1em;
+        font-size: $size-14;
+        box-shadow: 0px 0px 2px $shadow;
+    }
+
+    .uses {
+        width: 75%;
+        background: var(--silence);
+        border-radius: 10px;
+        padding: 2em;
+        text-align: justify;
+        line-height: 1em;
+        font-size: $size-14;
+        box-shadow: 0px 0px 2px $shadow;
+    }
+
+    .homebox-titles {
+        margin: 0 0 1em 0;
+        padding: 0 0 0.2em 0;
+        text-align: left;
+        border-bottom: solid 2px $dark-emerald;
+        font-variant: small-caps;
+        font-size: $size-20;
+    }
+}
+
+// Media queries for mobile use
+@media screen and (max-width: 768px) {
+    .homebox {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        .presentation {
+            width: 75%;
+        }
+
+        .target {
+            width: 75%;
+        }
+    }
+}

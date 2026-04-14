@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Addons{% endblock %}
+{% block title %}Modifier les add-ons{% endblock %}
 
 {% block body %}
-    <h1>Edit Addons</h1>
+{% if app.user %}
+    <h1>Modifier les liens externes</h1>
 
     {{ include('addons/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_addons_index') }}">back to list</a>
+    <a href="{{ path('app_addons_index') }}">Revenir en arrière</a>
 
     {{ include('addons/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

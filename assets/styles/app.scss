@@ -1,1 +1,25 @@
-// add your SASS styles in this file
+// CALLS SCSS FILES TO USE IN APP
+
+// FROM BASE
+@use "./base/fonts";
+
+// FROM COMPONENTS
+@use "./components/base";
+@use "./components/buttons";
+@use "./components/form";
+
+// FROM LAYOUTS
+@use "./layouts/footer";
+@use "./layouts/header";
+
+// FROM PAGES
+@use "./pages/campaign";
+@use "./pages/character";
+@use "./pages/genres";
+@use "./pages/home";
+@use "./pages/legal";
+@use "./pages/profile";
+@use "./pages/share";
+
+// FROM THEMES
+@use "./themes/themes";

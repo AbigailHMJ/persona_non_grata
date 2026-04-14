@@ -1,0 +1,22 @@
+@use "../abstract/variables" as *;
+@use "../abstract/breakpoints" as *;
+@use "../components/base" as *;
+
+// DEFINES STYLES FOR DARK AND LIGHT MODES
+.darkmode {
+    --text: #f5f4fb;
+    --background: #0e0e0e;
+    --primary: #abe3b9;
+    --secondary: #abe3b9;
+    --accent: #ddba46;
+    --silence: #232428;
+    --inputs: #3c3e44;
+
+    .light-switch {
+        display: none;
+    }
+
+    .dark-switch {
+        display: block;
+    }
+}

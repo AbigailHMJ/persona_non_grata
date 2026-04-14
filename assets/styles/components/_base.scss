@@ -1,0 +1,48 @@
+// Defines overall website styles
+
+@use "../abstract/variables" as *;
+@use "../abstract/breakpoints" as *;
+
+// Google Fonts import for Montserrat as it doesn't work with font-face
+@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&family=Heebo:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+// CSS reset
+:root {
+    --text: #05040b;
+    --background: #f2f2f2;
+    --primary: #1c542a;
+    --secondary: #DDBA46;
+    --accent: #DDBA46;
+    --silence: #EEE9E6;
+    --inputs: #fff;
+}
+
+body {
+    font-family: "CustomBody", sans-serif;
+    font-size: $size-14;
+    background: var(--background);
+    color: var(--text);
+    padding: 0;
+    margin: 0;
+    min-block-size: 100svb;
+    scroll-behavior: smooth;
+}
+
+html {
+    scrollbar-gutter: stable;
+    interpolate-size: allow-keywords;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+a:hover {
+    color: $eco-green;
+}
+
+main {
+    min-height: 100svb;
+}

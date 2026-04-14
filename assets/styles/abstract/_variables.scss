@@ -1,0 +1,61 @@
+// CSS VARIABLES FOR COLOURS AND FONTS
+
+// FONTS
+// Font for main titles (h1, h2)
+@font-face{
+    font-family:'CustomTitles', sans-serif;
+    src: url('/assets/styles/fonts/Montserrat-VariableFont_wght.ttf') format(truetype);
+}
+
+// Font for smaller titles (h3, h4...)
+@font-face{
+    font-family:'CustomSubtitles';
+    src: url('/assets/styles/fonts/GFSDidot-Regular.ttf');
+}
+
+// Font for overall text and body
+@font-face{
+    font-family:'CustomBody';
+    src: url('/assets/styles/fonts/Heebo-Regular.ttf');
+}
+
+// Font for buttons and submit forms
+@font-face{
+    font-family:'CustomButtons';
+    src: url('/assets/styles/fonts/MontserratAlternates-SemiBold.otf') format(opentype);
+    font-weight:500;
+}
+
+// Fonts scaling for easier use and better responsive
+$size-4: 0.25rem; // equates 4px
+$size-6: 0.375rem; // equates 6px
+$size-8: 0.5rem; // equates 8px
+$size-10: 0.625rem; // equates 10px
+$size-12: 0.75rem; // equates 12px
+$size-14: 0.875rem; // equates 14px
+$size-16: 1rem; // equates 16px
+$size-18: 1.125rem; // equates 18px
+$size-20: 1.25rem; // equates 20px
+$size-22: 1.375rem; // equates 22px
+$size-24: 1.5rem; // equates 24px
+$size-26: 1.625rem; // equates 26px
+$size-28: 1.75rem; // equates 28px
+$size-30: 1.875rem; // equates 30px
+$size-32: 2rem; // equates 32px
+$size-34: 2.125rem; // equates 34px
+$size-36: 2.25rem; // equates 36px
+$size-38: 2.375rem; // equates 38px
+$size-40: 2.5rem; // equates 40px
+
+// COLOURS
+$indian-gold: #DDBA46;
+$eco-green: #5CB35B;
+$dark-emerald: #1C542A;
+$chinook: #abe3b9;
+$silence: #EEE9E6;
+$white: #fff;
+$black: #000;
+$shadow:#8c8c8c;
+$dark:#0e0e0e;
+$outlines: rgb(0 0 0 / 0.2);
+$light-green:#f0faf2;

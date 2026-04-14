@@ -1,0 +1,22 @@
+// FONTS BASE
+// Defines the fonts' settings for the website
+
+@use "../abstract/variables" as*;
+@use "../abstract/breakpoints" as*;
+
+h1{
+    font-family:'CustomTitles', 'Montserrat', sans-serif;
+    text-transform:uppercase;
+    text-align:center;
+    color: var(--primary);
+    letter-spacing:2px;
+    font-size:$size-32;
+    border-bottom:double 5px var(--accent);
+}
+
+h3{
+    font-family:'CustomSubtitles', serif;
+    text-align:center;
+    font-size:$size-18;
+    font-weight:normal;
+}

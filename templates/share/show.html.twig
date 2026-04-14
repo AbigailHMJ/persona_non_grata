@@ -3,6 +3,7 @@
 {% block title %}Share{% endblock %}
 
 {% block body %}
+{% if app.user %}
     <h1>Share</h1>
 
     <table class="table">
@@ -17,7 +18,7 @@
             </tr>
             <tr>
                 <th>Date_share</th>
-                <td>{{ share.dateShare ? share.dateShare|date('Y-m-d') : '' }}</td>
+                <td>{{ share.dateShare ? share.dateShare|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Status</th>
@@ -31,4 +32,5 @@
     <a href="{{ path('app_share_edit', {'id': share.id}) }}">edit</a>
 
     {{ include('share/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

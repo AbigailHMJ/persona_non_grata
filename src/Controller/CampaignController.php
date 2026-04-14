@@ -17,6 +17,7 @@ final class CampaignController extends AbstractController
     #[Route(name: 'app_campaign_index', methods: ['GET'])]
     public function index(CampaignRepository $campaignRepository): Response
     {
+
         return $this->render('campaign/index.html.twig', [
             'campaigns' => $campaignRepository->findAll(),
         ]);
@@ -50,7 +51,7 @@ final class CampaignController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_campaign_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}/edit', name: 'app_campaign_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Campaign $campaign, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(CampaignType::class, $campaign);
@@ -68,7 +69,7 @@ final class CampaignController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_campaign_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_campaign_delete', methods: ['POST'])]
     public function delete(Request $request, Campaign $campaign, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$campaign->getId(), $request->getPayload()->getString('_token'))) {
@@ -78,4 +79,5 @@ final class CampaignController extends AbstractController
 
         return $this->redirectToRoute('app_campaign_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

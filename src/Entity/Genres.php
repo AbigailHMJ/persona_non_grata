@@ -15,14 +15,19 @@ class Genres
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+     #[ORM\Column(length: 255)]
+    private ?string $keyword = null;
 
     /**
      * @var Collection<int, Campaign>
      */
     #[ORM\ManyToMany(targetEntity: Campaign::class, mappedBy: 'genre')]
     private Collection $campaigns;
+
+       public function __toString()
+    {
+        return $this->keyword;
+    }
 
     public function __construct()
     {
@@ -41,14 +46,14 @@ class Genres
         return $this;
     }
 
-    public function getName(): ?string
+    public function getKeyword(): ?string
     {
-        return $this->name;
+        return $this->keyword;
     }
 
-    public function setName(string $name): static
+    public function setKeyword(string $keyword): static
     {
-        $this->name = $name;
+        $this->keyword = $keyword;
 
         return $this;
     }

@@ -1,0 +1,46 @@
+// Defines CSS styles for buttons and checkboxes in forms
+
+@use "../abstract/variables" as*;
+@use "../base/fonts" as*;
+
+.btn{
+    padding:5px;
+    font-family:'CustomButtons', 'Montserrat',sans-serif;
+    text-transform:uppercase;
+    color: $white;
+    background: $dark-emerald;
+    border:none;
+    border-radius:10vh;
+    font-size: $size-14;
+    width:150px;
+    margin:20px auto;
+    text-align:center;
+    font-weight:500;
+    border:solid 2px $indian-gold;
+}
+
+.toggle{
+    text-decoration:none;
+    height:35px;
+    width:35px;
+    border-radius:100%;
+    border:none;
+    color: var(--silence);
+    cursor:pointer;
+    font-size:$size-18;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--secondary);
+    margin:0 1em 0 0;
+    padding-top:2.5px;
+
+    .dark-switch {
+    display: none;
+}
+}
+
+.delete-btn{
+    margin:1em 0 0 2em;
+}

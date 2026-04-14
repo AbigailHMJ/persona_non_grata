@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Share{% endblock %}
+{% block title %}Modifier le partage{% endblock %}
 
 {% block body %}
-    <h1>Edit Share</h1>
+{% if app.user %}
+    <h1>Modifier le partage</h1>
 
-    {{ include('share/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('share/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
-    <a href="{{ path('app_share_index') }}">back to list</a>
+    <a href="{{ path('app_share_index') }}">Revenir à la liste</a>
 
     {{ include('share/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

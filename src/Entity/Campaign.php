@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Genres;
 
 #[ORM\Entity(repositoryClass: CampaignRepository::class)]
 class Campaign
@@ -32,15 +33,20 @@ class Campaign
      * @var Collection<int, Genres>
      */
     #[ORM\ManyToMany(targetEntity: Genres::class, inversedBy: 'campaigns')]
-    private Collection $genre;
+    private Collection $genres;
 
     #[ORM\ManyToOne(inversedBy: 'campaigns')]
     private ?Share $shared = null;
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     public function __construct()
     {
         $this->characters = new ArrayCollection();
-        $this->genre = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,15 +118,15 @@ class Campaign
     /**
      * @return Collection<int, Genres>
      */
-    public function getGenre(): Collection
+    public function getGenres(): Collection
     {
-        return $this->genre;
+        return $this->genres;
     }
 
     public function addGenre(Genres $genre): static
     {
-        if (!$this->genre->contains($genre)) {
-            $this->genre->add($genre);
+        if (!$this->genres->contains($genre)) {
+            $this->genres->add($genre);
         }
 
         return $this;
@@ -128,7 +134,7 @@ class Campaign
 
     public function removeGenre(Genres $genre): static
     {
-        $this->genre->removeElement($genre);
+        $this->genres->removeElement($genre);
 
         return $this;
     }

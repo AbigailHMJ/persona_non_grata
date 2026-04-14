@@ -6,21 +6,26 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+// Ensures no username can be used more than once
+#[UniqueEntity(fields: ['username'], message: 'Ce nom d\'utilisateur est déjà pris')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', unique: true)]
     private ?string $username = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', unique: true)]
+    // Prevents use of the same email twice
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
@@ -29,8 +34,8 @@ class User
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $birthdate = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $role = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private array $roles = [];
 
     /**
      * @var Collection<int, Character>
@@ -72,7 +77,7 @@ class User
         $this->username = $username;
 
         return $this;
-    }
+    } 
 
     public function getEmail(): ?string
     {
@@ -91,7 +96,7 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -110,16 +115,25 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+   public function getRoles(): array
     {
-        return $this->role;
+        // Guarantees to at least get the role user at registration
+        $roles = $this->roles;
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        return array_unique($roles);
     }
 
-    public function setRole(?string $role): static
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
-
+        $this->roles = $roles;
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\CharacterRepository;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CharacterRepository::class)]
@@ -18,7 +20,7 @@ class Character
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $age = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -33,8 +35,8 @@ class Character
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $others = null;
 
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private mixed $illustration = null;
+    #[ORM\Column(nullable: true)]
+    private ?string $illustration = null;
 
     #[ORM\ManyToOne(inversedBy: 'characters')]
     private ?Campaign $campaign = null;
@@ -42,7 +44,7 @@ class Character
     #[ORM\ManyToOne(inversedBy: 'characters')]
     private ?User $user = null;
 
-    #[ORM\OneToOne(mappedBy: 'addon', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'addon')] 
     private ?Addons $addons = null;
 
     public function getId(): ?int
@@ -129,12 +131,12 @@ class Character
         return $this;
     }
 
-    public function getIllustration(): mixed
+    public function getIllustration(): ?string
     {
         return $this->illustration;
     }
 
-    public function setIllustration(mixed $illustration): static
+    public function setIllustration(?string $illustration): static
     {
         $this->illustration = $illustration;
 
@@ -186,4 +188,5 @@ class Character
 
         return $this;
     }
+
 }

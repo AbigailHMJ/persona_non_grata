@@ -1,0 +1,43 @@
+@use "../abstract/variables" as *;
+@use "../abstract/breakpoints" as *;
+
+// Defines overall footer styles
+footer {
+    background: $dark-emerald;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border-top: solid 2px $indian-gold;
+    gap: 2em;
+
+.site-name{
+    font-family:'CustomSubtitles', 'GFS Didot', serif;
+    color:$indian-gold;
+    font-size:$size-22;
+    text-align:left;
+    text-wrap:wrap;
+    width:70px;
+    line-height:1.2rem;
+}
+
+    ul {
+        list-style-type: none;
+        font-size: $size-12;
+        color: $light-green;
+        line-height: 1.5em;
+    }
+
+    li a {
+        text-decoration: none;
+        color: $light-green;
+    }
+
+    p {
+        width: 40%;
+        color: $light-green;
+        text-align: left;
+        font-size: $size-12;
+    }
+}

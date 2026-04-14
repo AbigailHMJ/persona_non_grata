@@ -1,0 +1,163 @@
+@use "../abstract/variables" as *;
+@use "../abstract/breakpoints" as *;
+@use "../components/base" as *;
+
+// Defines styles for campaign related pages
+
+.welcome-back {
+    width: 70%;
+    margin: 2em auto;
+}
+
+// CAMPAIGN INDEX
+// Display of all campaigns
+.campaign-display {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+    width: 95%;
+    margin:0 auto;
+}
+
+// Display of each campaign card
+.campaign-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    gap: 1em;
+    margin-top: 1em;
+    box-shadow: 0px 0px 2px $shadow;
+    background: var(--silence);
+    width: 55%;
+}
+
+.campaign-card h3 {
+    font-family: "CustomSubtitles", serif;
+    font-size: $size-26;
+    color: var(--primary);
+    letter-spacing: 1px;
+    text-align: center;
+    border-bottom: double 5px $indian-gold;
+    margin: 0.5rem;
+}
+
+.campaign-card p {
+    text-align: justify;
+    line-height: 1em;
+    font-size: $size-14;
+    width: 85%;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.campaign-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    padding: 1em;
+}
+
+.add-campaign {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 2em 0 2em 2em;
+}
+
+@media screen and (min-width:768px) {
+    .campaign-display{
+        display:flex;
+        flex-direction:row;
+        margin:auto;
+        max-width:100%;
+}
+}
+
+@media screen and (min-width:992px) {
+    .campaign-display{
+        max-width:900px;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .campaign-display{
+            max-width:960px;
+        }
+}
+
+@media screen and (min-width:1200px) {
+    .campaign-display{
+            max-width:1100px;
+        }
+}
+
+@media screen and (min-width:1500px) {
+    .campaign-display{
+            max-width:1400px;
+        }
+
+}
+
+// Display of a selected campaign
+.campaign-description {
+    width: 70%;
+    padding: 1em;
+    margin: 0 auto;
+}
+
+.campaign-characters {
+    font-family: "CustomSubtitles", serif;
+    text-align: center;
+    font-size: $size-20;
+    color: $dark-emerald;
+    letter-spacing: 1px;
+    background: $indian-gold;
+    padding: 0.2em;
+    height: fit-content;
+    margin: 1em 0 0 0;
+}
+
+.campaign-character-list {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.campaign-character {
+    border-bottom: solid 2px $indian-gold;
+    padding: 0.5em;
+    font-family: "CustomTitles", "Montserrat", sans-serif;
+    font-size: $size-14;
+    font-weight: 600;
+    width: fit-content;
+    height: fit-content;
+}
+
+.campaign-genres {
+    font-family: "CustomTitles", "Montserrat", sans-serif;
+    color: var(--text);
+    font-size: $size-14;
+    font-weight: 600;
+    text-align: left;
+    display: block;
+    text-align: center;
+
+    &::after {
+        content: " •";
+    }
+}
+
+.campaign-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 1em;
+    margin: 2em auto;
+}

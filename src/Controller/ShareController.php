@@ -30,6 +30,11 @@ final class ShareController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            // à partir de $request, récupérer la saisie d l'input user -> string
+            // utiliser un objet de type userRepo pour pouvoir faire un find avec le nom d'utilisateur en paramètre
+            // si un utilisateur trouvé, faire un setUser() sur $share en lui passant l'utilisateur récupéré et continuer sur le persist
+            // Sinon retourner un message d'erreur
             $entityManager->persist($share);
             $entityManager->flush();
 

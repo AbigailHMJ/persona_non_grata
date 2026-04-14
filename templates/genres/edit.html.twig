@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Genres{% endblock %}
+{% block title %}Modifier les genres{% endblock %}
 
 {% block body %}
-    <h1>Edit Genres</h1>
+{% if app.user %}
+<main>
+    <h1>Modifier les genres</h1>
 
-    {{ include('genres/_form.html.twig', {'button_label': 'Update'}) }}
+   <div class="new-genre"> {{ include('genres/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_genres_index') }}">back to list</a>
+    <a href="{{ path('app_genres_index') }}">Revenir à la liste</a>
 
     {{ include('genres/_delete_form.html.twig') }}
+    </div>
+    </main>
+    {% endif %}
 {% endblock %}

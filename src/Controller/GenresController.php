@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/genres')]
 final class GenresController extends AbstractController
@@ -23,8 +24,11 @@ final class GenresController extends AbstractController
     }
 
     #[Route('/new', name: 'app_genres_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        if(!$this->isGranted('ROLE_ADMIN')){
+            throw $this->createAccessDeniedException('Merci de vous connecter');}
+        else{
         $genre = new Genres();
         $form = $this->createForm(GenresType::class, $genre);
         $form->handleRequest($request);
@@ -33,6 +37,8 @@ final class GenresController extends AbstractController
             $entityManager->persist($genre);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Le genre a bien été ajouté');
+
             return $this->redirectToRoute('app_genres_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -40,6 +46,7 @@ final class GenresController extends AbstractController
             'genre' => $genre,
             'form' => $form,
         ]);
+        }
     }
 
     #[Route('/{id}', name: 'app_genres_show', methods: ['GET'])]
@@ -53,6 +60,9 @@ final class GenresController extends AbstractController
     #[Route('/{id}/edit', name: 'app_genres_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Genres $genre, EntityManagerInterface $entityManager): Response
     {
+        if(!$this->isGranted('ROLE_ADMIN')){
+            throw $this->createAccessDeniedException('Merci de vous connecter');}
+        else{
         $form = $this->createForm(GenresType::class, $genre);
         $form->handleRequest($request);
 
@@ -66,16 +76,21 @@ final class GenresController extends AbstractController
             'genre' => $genre,
             'form' => $form,
         ]);
+        }
     }
 
     #[Route('/{id}', name: 'app_genres_delete', methods: ['POST'])]
     public function delete(Request $request, Genres $genre, EntityManagerInterface $entityManager): Response
     {
+        if(!$this->isGranted('ROLE_ADMIN')){
+            throw $this->createAccessDeniedException('Merci de vous connecter');}
+        else{
         if ($this->isCsrfTokenValid('delete'.$genre->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($genre);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_genres_index', [], Response::HTTP_SEE_OTHER);
+    }
     }
 }

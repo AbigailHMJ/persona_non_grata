@@ -1,47 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Character index{% endblock %}
+{% block title %}Liste des personnages
+{% endblock %}
 
 {% block body %}
-    <h1>Character index</h1>
+	{% if app.user %}
+		<main>
+			<h1>Liste des personnages</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Physical_traits</th>
-                <th>Character_traits</th>
-                <th>Background</th>
-                <th>Others</th>
-                <th>Illustration</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for character in characters %}
-            <tr>
-                <td>{{ character.id }}</td>
-                <td>{{ character.name }}</td>
-                <td>{{ character.age }}</td>
-                <td>{{ character.physicalTraits }}</td>
-                <td>{{ character.characterTraits }}</td>
-                <td>{{ character.background }}</td>
-                <td>{{ character.others }}</td>
-                <td>{{ character.illustration }}</td>
-                <td>
-                    <a href="{{ path('app_character_show', {'id': character.id}) }}">show</a>
-                    <a href="{{ path('app_character_edit', {'id': character.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_character_new') }}">Create new</a>
+			<a class="character-new" href="{{ path('app_character_new') }}">
+				<i class="fa-solid fa-circle-plus"></i>
+				Nouveau personnage</a>
+			{% for character in app.user.characters %}
+				<table class="character-index">
+					<thead>
+						<tr>
+							<th>Nom</th>
+							<th>Illustration</th>
+							<th>Campagne</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for character in characters %}
+							<tr>
+								<td class="index-character-name">{{ character.name }}</td>
+								<td><img class="index-illustration" src="{{ asset('uploadscharacter/mini/300x300-' ~ character.illustration) }}"/></td>
+								<td>{{ character.campaign }}</td>
+								<td>
+									<a class="index-character-actions" href="{{ path('app_character_show', {'id': character.id}) }}">Voir</a>
+									<a class="index-character-actions" href="{{ path('app_character_edit', {'id': character.id}) }}">Modifier</a>
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="9">Aucun personnage trouvé</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endfor %}
+		</main>
+	{% endif %}
 {% endblock %}

@@ -1,0 +1,38 @@
+@use "../abstract/variables" as*;
+@use "../abstract/breakpoints" as*;
+@use "../components/base" as*;
+
+// Defines overall styles for sharing related pages
+
+// Shared campaigns
+// Users will only see the campaigns they participate in
+// Admin will see every shared campaign existing in the database
+
+.share-index{
+    box-shadow: 0px 0px 2px $shadow;
+    width: 80%;
+    margin: 1em auto;
+    border-collapse: collapse;
+}
+
+thead {
+    width: 80%;
+}
+
+th {
+    text-align: center;
+    width: 15%;
+    margin: 0;
+    background: $indian-gold;
+    padding: 0.5em;
+    font-family: "CustomSubtitles", serif;
+    text-transform: uppercase;
+    color: $dark-emerald;
+}
+
+.share-new{
+    text-align: left;
+    display: block;
+    margin-left: 2em;
+    font-family:'CustomTitles', 'Montserrat', sans-serif;
+}

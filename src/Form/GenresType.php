@@ -2,23 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Campaign;
 use App\Entity\Genres;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Repository\GenresRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+// use Symfony\Component\Validator\Constraints\Length;
+// use Symfony\Component\Validator\Constraints\NotBlank;
 
 class GenresType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('campaigns', EntityType::class, [
-                'class' => Campaign::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('keyword', TextType::class, [
+                'label' => 'Genre : ',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'fantasy, science-fiction...',
+                ],
             ])
         ;
     }

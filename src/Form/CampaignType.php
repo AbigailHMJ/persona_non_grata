@@ -4,9 +4,10 @@ namespace App\Form;
 
 use App\Entity\Campaign;
 use App\Entity\Genres;
-use App\Entity\Share;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,16 +16,25 @@ class CampaignType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('genre', EntityType::class, [
-                'class' => Genres::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+            ->add('title', TextType::class, [
+                'label' => 'Titre : ',
+                'attr' => [
+                    'placeholder' => 'nom de la campagne',
+                ]
             ])
-            ->add('shared', EntityType::class, [
-                'class' => Share::class,
-                'choice_label' => 'id',
+            ->add('description', TextareaType::class, [
+                'label' => 'Description : ',
+                'attr' => [
+                    'placeholder' => 'Brève description de l\'univers'
+                ]
+            ])
+            ->add('genres', EntityType::class, [
+                'class' => Genres::class,
+                'choice_label' => 'keyword',
+                'label' => 'Genres : ',
+                'multiple' => true,
+                'expanded' => true,
+                'required' => false,
             ])
         ;
     }

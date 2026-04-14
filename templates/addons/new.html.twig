@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Addons{% endblock %}
+{% block title %}Ajouter des add-ons{% endblock %}
 
 {% block body %}
-    <h1>Create new Addons</h1>
+{% if app.user %}
+    <h1>Ajouter des liens externes</h1>
 
-    {{ include('addons/_form.html.twig') }}
+  <div class="addons">{{ include('addons/_form.html.twig') }}
 
-    <a href="{{ path('app_addons_index') }}">back to list</a>
+    <a href="{{ path('app_addons_index') }}">Revenir à la liste</a>
+    </div>
+    {% endif %}
 {% endblock %}
